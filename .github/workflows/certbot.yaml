@@ -1,0 +1,22 @@
+name: Certbot Workflow
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 */2 *" # At 09:00 KST, on day 1 of the month, every 2 months
+
+jobs:
+  renew-ssl-certificate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Renew SSL Certificate
+        uses: peterkimzz/aws-ssm-send-command@master
+        id: ssm-deploy-new-container
+        with:
+            aws-region: ${{ secrets.AWS_REGION }}
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            instance-ids: ${{ secrets.INSTANCE_ID }}
+
+            working-directory: ${{ secrets.WORKING_DIRECTORY }}
+            command: /bin/bash ./renew-ssl-certificate.sh
+            comment: Renew SSL Certificate
