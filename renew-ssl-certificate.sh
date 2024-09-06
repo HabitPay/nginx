@@ -1,6 +1,7 @@
 #!/bin/bash
 
-LOG_FILE="/var/log/spring-demo/renew-ssl.log"
+APPLICATION_NAME="habitpay"
+LOG_FILE="/var/log/$APPLICATION_NAME/renew-ssl.log"
 
 log() {
     local msg="$1"

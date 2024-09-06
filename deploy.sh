@@ -1,6 +1,7 @@
 #!/bin/bash
 
-LOG_FILE="/var/log/spring-demo/deploy.log"
+APPLICATION_NAME="habitpay"
+LOG_FILE="/var/log/$APPLICATION_NAME/deploy.log"
 BLUE_CONTAINER="backend.habitpay.internal:8080"
 GREEN_CONTAINER="backend.habitpay.internal:8081"
 HEALTHCHECK_API="actuator/health"
