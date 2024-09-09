@@ -48,8 +48,8 @@ switch() {
 }
 
 main() {
-    local is_blue_running=$(grep -q "http://blue" nginx/nginx.conf && echo "running")
-    local is_green_running=$(grep -q "http://green" nginx/nginx.conf && echo "running")
+    local is_blue_running=$(grep -q "http://blue" conf/nginx.conf && echo "running")
+    local is_green_running=$(grep -q "http://green" conf/nginx.conf && echo "running")
 
     if [ "$is_blue_running" = "running" ]; then
         log "Blue container is running."
