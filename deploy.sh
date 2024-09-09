@@ -5,6 +5,7 @@ LOG_FILE="/var/log/$APPLICATION_NAME/deploy.log"
 BLUE_CONTAINER="backend.habitpay.internal:8080"
 GREEN_CONTAINER="backend.habitpay.internal:8081"
 HEALTHCHECK_API="actuator/health"
+NGINX_CONFIGURATION_FILE="conf/nginx.conf"
 
 log() {
     local msg="$1"
@@ -42,14 +43,14 @@ switch() {
     local target=$2
 
     log "Switching from $current to $target..."
-    sed -i "s|http://$current|http://$target|" nginx/nginx.conf
+    sed -i "s|http://$current|http://$target|" $NGINX_CONFIGURATION_FILE
     docker exec nginx nginx -s reload
     log "Complete to switch container. ($current -> $target)"
 }
 
 main() {
-    local is_blue_running=$(grep -q "http://blue" conf/nginx.conf && echo "running")
-    local is_green_running=$(grep -q "http://green" conf/nginx.conf && echo "running")
+    local is_blue_running=$(grep -q "http://blue" $NGINX_CONFIGURATION_FILE && echo "running")
+    local is_green_running=$(grep -q "http://green" $NGINX_CONFIGURATION_FILE && echo "running")
 
     if [ "$is_blue_running" = "running" ]; then
         log "Blue container is running."
