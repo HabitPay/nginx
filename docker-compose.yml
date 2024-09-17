@@ -5,21 +5,10 @@ services:
     restart: on-failure:3
     ports:
       - 80:80
-      - 443:443
     networks:
       - nginx-connection
     volumes:
       - ./conf/:/etc/nginx/conf.d/
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-
-  certbot:
-    image: certbot/certbot:latest
-    command: certonly --webroot --webroot-path=/var/www/certbot --email habitpay.team@google.com --agree-tos --no-eff-email -d api.habitpay.link
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-      - ./certbot/logs:/var/log/letsencrypt
 
 networks:
   nginx-connection:
